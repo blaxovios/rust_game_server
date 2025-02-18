@@ -1,0 +1,6 @@
+[package]
+name = "argolysis_studios_game_server"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
