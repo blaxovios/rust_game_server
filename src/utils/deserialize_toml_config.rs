@@ -3,6 +3,7 @@ use std::fs;
 use std::process::exit;
 use toml;
 
+
 #[derive(Deserialize)]
 pub struct Data {
     pub tracing_config: Tracing,
@@ -15,6 +16,19 @@ pub struct Tracing {
 }
 
 
+/// Deserialize a tracing level from a given string inside the config TOML file.
+///
+/// This function will return an error if the input string does not match one of the
+/// following strings (case-insensitive):
+///
+/// - "error"
+/// - "warn"
+/// - "info"
+/// - "debug"
+/// - "trace"
+///
+/// The function will return the corresponding `tracing::Level` value if the input string
+/// matches one of the above.
 fn deserialize_tracing_level<'de, D>(deserializer: D) -> Result<tracing::Level, D::Error>
 where
     D: serde::Deserializer<'de>,
@@ -31,6 +45,9 @@ where
     Ok(level)
 }
 
+    /// Read TOML config file and parses its contents into a Data struct.
+    ///
+    /// Handles errors by printing an error message and exiting the process.
 pub fn read_toml_config(filename: &str) -> Data {
     let contents = match fs::read_to_string(filename) {
         Ok(c) => c,

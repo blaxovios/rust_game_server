@@ -1,3 +1,3 @@
-pub async fn get_progress() -> &'static str {
+pub async fn get_welcome() -> &'static str {
     "You came to my game server!"
 }
