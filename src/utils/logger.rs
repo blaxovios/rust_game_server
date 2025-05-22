@@ -1,14 +1,11 @@
-// See more at: https://crates.io/crates/tracing
-use tracing::{info, Level};
+use tracing::Level;
 use tracing_subscriber::FmtSubscriber;
 
-pub async fn server_tracer () -> () {
-    // a builder for `FmtSubscriber`.
+
+/// Sets a global tracing subscriber for the server that logs messages at the specified level.
+pub async fn server_tracer (level: Level) -> () {
     let subscriber = FmtSubscriber::builder()
-        // all spans/events with a level higher than TRACE (e.g, debug, info, warn, etc.)
-        // will be written to stdout.
-        .with_max_level(Level::TRACE)
-        // completes the builder.
+        .with_max_level(level)
         .finish();
 
     tracing::subscriber::set_global_default(subscriber)
